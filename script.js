@@ -19,30 +19,12 @@ let spawnTime = baseSpawnTime;
 
 // --- Procedural Waterfall ---
 function createWaterfall() {
-    const particleCount = 200;
-    const colors = ['#5D9CEC', '#82B1FF', '#A8D0FF', '#FFFFFF'];
-    const noise2D = createNoise2D();
-
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('water-particle');
-        
-        const size = Math.random() * 8 + 4;
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${x}%`;
-        particle.style.top = `${y}%`;
-        
-        const noise = (noise2D(x * 0.1, y * 0.1) + 1) / 2;
-        particle.style.backgroundColor = colors[Math.floor(noise * colors.length)];
-        
-        particle.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
-        particle.style.animationDelay = `${Math.random() * 1.5}s`;
-
-        waterfall.appendChild(particle);
+    // The visual waterfall is now handled by an animated background image in CSS.
+    // This function can be kept for additional particle effects if desired,
+    // but for now, we can leave it empty or remove it to simplify.
+    // Let's remove the JS-based particles for better performance and simplicity.
+    while (waterfall.firstChild) {
+        waterfall.removeChild(waterfall.firstChild);
     }
 }
 
@@ -130,7 +112,7 @@ function spawnFish() {
         easing: 'linear',
         duration: duration,
         begin: () => {
-             currentFish.style.bottom = `${Math.random() * 15 + 5}%`;
+             currentFish.style.bottom = `${Math.random() * 15 + 10}%`; // Adjusted to clear log/terrain
         },
         complete: () => {
             if (currentFish) {
@@ -154,8 +136,8 @@ function handleCatchAttempt() {
     
     // Define a catch zone relative to the bear
     const catchZone = {
-        top: bearRect.top - 20,
-        bottom: bearRect.top + bearRect.height * 0.7,
+        top: bearRect.top - bearRect.height * 0.2, // increased vertical range
+        bottom: bearRect.top + bearRect.height * 0.8,
         left: bearRect.left,
         right: bearRect.right
     };

@@ -4,14 +4,16 @@ body, html {
     overflow: hidden;
     height: 100%;
     font-family: 'Arial', sans-serif;
-    background-color: #3498db;
+    background-color: #5D9CEC;
 }
 
 #game-container {
     position: relative;
     width: 100%;
     height: 100%;
-    background: #5D9CEC;
+    background-image: url('./background.png');
+    background-size: cover;
+    background-position: center bottom;
     overflow: hidden;
     user-select: none;
     -webkit-user-select: none;
@@ -25,14 +27,17 @@ body, html {
     width: 100%;
     max-width: 400px;
     height: 100%;
+    overflow: hidden;
 }
 
 #bear {
     position: absolute;
-    bottom: 15%;
+    bottom: 28vh;
     left: 50%;
-    width: 120px;
-    height: 120px;
+    width: 20vmin;
+    height: 20vmin;
+    max-width: 120px;
+    max-height: 120px;
     background-image: url('./bear_idle.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -54,7 +59,7 @@ body, html {
 @keyframes fallAnimation {
     0% {
         transform: translateX(-50%) rotate(0deg);
-        bottom: 15%;
+        bottom: 28vh;
     }
     100% {
         transform: translateX(-50%) rotate(90deg) scale(0.8);
@@ -67,10 +72,22 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 30%;
-    background-color: #2980b9;
+    height: 100%;
+    background-image: url('./waterfall_bg.png');
+    background-size: 200% auto;
+    background-repeat: repeat;
     z-index: 1;
     overflow: hidden;
+    animation: waterfall-flow 5s linear infinite;
+}
+
+@keyframes waterfall-flow {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 400px;
+    }
 }
 
 .water-particle {
@@ -84,14 +101,16 @@ body, html {
         transform: translateY(0);
     }
     to {
-        transform: translateY(30vh);
+        transform: translateY(100vh);
     }
 }
 
 .fish {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 12vmin;
+    height: 12vmin;
+    max-width: 70px;
+    max-height: 70px;
     background-image: url('./fish.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -151,4 +170,40 @@ body, html {
 
 #message p {
     font-size: 1.5em;
+}
+
+#log {
+    position: absolute;
+    bottom: 25vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 10vh;
+    background-image: url('./log.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 11;
+}
+
+#terrain-left, #terrain-right {
+    position: absolute;
+    bottom: 0;
+    width: 30%;
+    height: 100%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    z-index: 15;
+}
+
+#terrain-left {
+    left: 0;
+    background-image: url('./terrain_left.png');
+    background-position: left bottom;
+}
+
+#terrain-right {
+    right: 0;
+    background-image: url('./terrain_right.png');
+    background-position: right bottom;
 }
