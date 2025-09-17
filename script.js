@@ -1,4 +1,5 @@
 import anime from 'animejs';
+import { createNoise2D } from 'simplex-noise';
 
 const bear = document.getElementById('bear');
 const world = document.getElementById('world');
@@ -6,6 +7,7 @@ const scoreDisplay = document.getElementById('score');
 const messageContainer = document.getElementById('message-container');
 const messageEl = document.getElementById('message');
 const gameContainer = document.getElementById('game-container');
+const waterfall = document.getElementById('waterfall');
 
 let score = 0;
 let gameState = 'start'; // 'start', 'playing', 'gameover'
@@ -14,6 +16,35 @@ let fishAnimation = null;
 let baseSpawnTime = 2000;
 let minSpawnTime = 600;
 let spawnTime = baseSpawnTime;
+
+// --- Procedural Waterfall ---
+function createWaterfall() {
+    const particleCount = 200;
+    const colors = ['#5D9CEC', '#82B1FF', '#A8D0FF', '#FFFFFF'];
+    const noise2D = createNoise2D();
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('water-particle');
+        
+        const size = Math.random() * 8 + 4;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${x}%`;
+        particle.style.top = `${y}%`;
+        
+        const noise = (noise2D(x * 0.1, y * 0.1) + 1) / 2;
+        particle.style.backgroundColor = colors[Math.floor(noise * colors.length)];
+        
+        particle.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+        particle.style.animationDelay = `${Math.random() * 1.5}s`;
+
+        waterfall.appendChild(particle);
+    }
+}
 
 // --- Sound ---
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -184,3 +215,4 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+createWaterfall();
